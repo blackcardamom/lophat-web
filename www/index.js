@@ -17,6 +17,7 @@ function setupForm(worker) {
   button.onclick = async (e) => {
     e.preventDefault();
     try {
+      hideError();
       const boundary_obj = buildBoundaryObj(textarea.value);
       displayComputing();
       const diagram = await worker.computePairings(boundary_obj);
@@ -66,6 +67,13 @@ function displayDiagram(diagram) {
 function displayError(error) {
   document.getElementById('problem').classList.remove('noshow');
   console.error(error);
+}
+
+function hideError() {
+  const elem = document.getElementById('problem');
+  if (!elem.classList.contains('noshow')) {
+    elem.classList.add('noshow');
+  }
 }
 
 async function init() {

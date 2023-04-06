@@ -21,7 +21,6 @@ p.problem.noshow {
         <p>Each column should be provided on a new line in the form <code>dimension,boundary</code>
         where <code>boundary</code> is a comma-separated list of the non-zero indices of that column.
         <p>If the column has empty boundary (e.g. a vertex) then simply provide <code>dimension</code> as in the example below.</p>
-        <p id="problem" class="noshow problem">There was a problem, check the console for more details then refresh.</p>
         </p>
 <textarea name="boundary_matrix" id="boundary_matrix", rows="30", cols="150">
 0
@@ -36,6 +35,7 @@ p.problem.noshow {
 <button id="compute">Compute pairings</button>
     </form>
     <p>Result:</p>
+    <p id="problem" class="noshow problem">There was a problem, check the console for more details. You may need to refresh.</p>
     <p id="result"></p>
     <noscript>Your browser must support (threaded) webassembly and javascript to use this page.</noscript>
 	<script src="./bootstrap.js"></script>
