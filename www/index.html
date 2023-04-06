@@ -6,8 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LoPHAT</title>
     <!--link rel="stylesheet" href="style.css"-->
+<style>
+p.problem {
+    color: red;
+}
+p.problem.noshow {
+    display: none;
+}
+</style>
   </head>
   <body>
+    <form>
+        <p><label for="boundary_matrix"><b>Boundary matrix</b></label></p>
+        <p>Each column should be provided on a new line in the form <code>dimension,boundary</code>
+        where <code>boundary</code> is a comma-separated list of the non-zero indices of that column.
+        <p>If the column has empty boundary (e.g. a vertex) then simply provide <code>dimension</code> as in the example below.</p>
+        <p id="problem" class="noshow problem">There was a problem, check the console for more details then refresh.</p>
+        </p>
+<textarea name="boundary_matrix" id="boundary_matrix", rows="30", cols="150">
+0
+0
+0
+1,0,1
+1,0,2
+1,1,2
+2,3,4,5
+</textarea>
+<br/>
+<button id="compute">Compute pairings</button>
+    </form>
+    <p>Result:</p>
+    <p id="result"></p>
     <noscript>Your browser must support (threaded) webassembly and javascript to use this page.</noscript>
 	<script src="./bootstrap.js"></script>
   </body>

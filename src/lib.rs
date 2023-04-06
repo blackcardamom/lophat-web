@@ -60,3 +60,29 @@ pub fn decompose_cycle_graph(n: usize) -> Vec<usize> {
         .collect();
     pairings
 }
+
+// TODO: Figure out how to return paired and unpaired
+#[wasm_bindgen]
+pub fn compute_pairings(
+    boundaries: &[usize],
+    indexes: &[usize],
+    dimensions: &[usize],
+) -> Vec<usize> {
+    let mut matrix = vec![];
+    let n_cols = indexes.len();
+    for i in 0..n_cols {
+        let start = indexes[i];
+        let end = indexes.get(i + 1).copied().unwrap_or(boundaries.len());
+        let col = &boundaries[start..end];
+        let dimension = dimensions[i];
+        matrix.push(VecColumn::from((dimension, col.into())));
+    }
+    let decomp = rv_decompose(matrix.into_iter(), &LoPhatOptions::default());
+    let diagram = decomp.diagram();
+    let pairings: Vec<_> = diagram
+        .paired
+        .into_iter()
+        .flat_map(|pair| vec![pair.0, pair.1])
+        .collect();
+    pairings
+}
