@@ -4,8 +4,8 @@
   "description": "A web app allowing to use the LoPHAT library in yoru browser",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --live-reload",
-    "build": "webpack",
+    "dev": "NODE_ENV=development webpack-dev-server --live-reload",
+    "build": "NODE_ENV=production webpack",
     "serve": "superstatic serve dist"
   },
   "dependencies": {
