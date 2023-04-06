@@ -1,0 +1,22 @@
+{
+  "name": "lophat-web-app",
+  "version": "0.1.0",
+  "description": "A web app allowing to use the LoPHAT library in yoru browser",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --live-reload",
+    "build": "webpack",
+    "serve": "superstatic serve dist"
+  },
+  "dependencies": {
+    "comlink": "^4.4.1",
+    "lophat-web": "file:../pkg"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "http-server": "^14.1.1",
+    "superstatic": "^9.0.3",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.1"
+  }
+}
