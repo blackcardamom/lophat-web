@@ -11,6 +11,8 @@ use lophat::LoPhatOptions;
 
 use lophat::DiagramReadOff;
 
+use lophat::{anti_transpose, anti_transpose_diagram};
+
 use rayon::{current_num_threads, prelude::*};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -77,8 +79,9 @@ pub fn compute_pairings(
         let dimension = dimensions[i];
         matrix.push(VecColumn::from((dimension, col.into())));
     }
-    let decomp = rv_decompose(matrix.into_iter(), &LoPhatOptions::default());
-    let diagram = decomp.diagram();
+    let at = anti_transpose(&matrix);
+    let decomp = rv_decompose(at.into_iter(), &LoPhatOptions::default());
+    let diagram = anti_transpose_diagram(decomp.diagram(), n_cols);
     let pairings: Vec<_> = diagram
         .paired
         .into_iter()
