@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [{ from: 'index.html', to: 'index.html' }],
+      patterns: [{ from: '_headers', to: '_headers', toType: 'file' }],
     }),
   ],
   devServer: {
