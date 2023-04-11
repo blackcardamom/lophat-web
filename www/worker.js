@@ -4,7 +4,6 @@ import init, {
   initThreadPool,
   rayon_sum,
   rayon_n_threads,
-  decompose_cycle_graph,
   compute_pairings,
 } from 'lophat-web';
 
@@ -42,9 +41,6 @@ async function initFunctions() {
     getNumThreads() {
       return rayon_n_threads();
     },
-    decomposeCycleGraph(n) {
-      return decompose_cycle_graph(n);
-    },
     computePairings(boundary_obj) {
       const flattened = flattenBoundaries(boundary_obj.boundaries);
       const dimensions = boundary_obj.dimensions;
@@ -53,7 +49,10 @@ async function initFunctions() {
         flattened.indexes,
         dimensions
       );
-      return formatPairings(flat_pairings);
+      return {
+        paired: formatPairings(flat_pairings.paired),
+        unpaired: flat_pairings.unpaired,
+      };
     },
   });
 }
