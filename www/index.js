@@ -58,7 +58,6 @@ function displayComputing() {
 // TODO: Display output in nicer format
 function displayDiagram(diagram) {
   const result_area = document.getElementById('result');
-  console.log(diagram);
   const paired_string = diagram.paired
     .map((pairing) => `(${pairing[0]}, ${pairing[1]})`)
     .join('\n');

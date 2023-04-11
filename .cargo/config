@@ -7,4 +7,5 @@ rustflags = ["-C", "target-feature=+atomics,+bulk-memory,+mutable-globals"]
 [unstable]
 build-std = ["panic_abort", "std"]
 
-
+[profile.release]
+lto=true
