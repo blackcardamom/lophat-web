@@ -43,7 +43,7 @@ pub fn rayon_n_threads() -> i32 {
 
 #[wasm_bindgen]
 pub fn decompose_cycle_graph(n: usize) -> Vec<usize> {
-    let boundary_matrix_0 = (0..n).map(|i| (0 as usize, vec![]));
+    let boundary_matrix_0 = (0..n).map(|_i| (0 as usize, vec![]));
     let mut boundary_matrix_1: Vec<(usize, Vec<usize>)> =
         (1..n).map(|i| (1, vec![i - 1, i])).collect();
     boundary_matrix_1.push((1, vec![0, n - 1]));
@@ -80,7 +80,8 @@ pub fn compute_pairings(
         matrix.push(VecColumn::from((dimension, col.into())));
     }
     let at = anti_transpose(&matrix);
-    let decomp = rv_decompose(at.into_iter(), &LoPhatOptions::default());
+    let options = LoPhatOptions::default();
+    let decomp = rv_decompose(at.into_iter(), &options);
     let diagram = anti_transpose_diagram(decomp.diagram(), n_cols);
     let pairings: Vec<_> = diagram
         .paired

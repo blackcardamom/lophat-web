@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --live-reload",
-    "build": "NODE_ENV=production webpack",
+    "build": "rm -rf dist && NODE_ENV=production webpack",
     "serve": "superstatic serve dist"
   },
   "dependencies": {
