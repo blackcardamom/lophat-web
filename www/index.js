@@ -5,10 +5,11 @@ async function getWorker() {
     .init;
 }
 
-function checkNumThreads(worker) {
-  worker.getNumThreads().then((n_threads) => {
-    console.log(`Rayon number of threads: ${n_threads}`);
-  });
+async function checkNumThreads(worker) {
+  n_threads = await worker.getNumThreads();
+  console.log(`Rayon number of threads: ${n_threads}`);
+  const span = document.getElementById('n_threads');
+  span.innerText = n_threads;
 }
 
 function setupForm(worker) {
