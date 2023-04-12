@@ -60,7 +60,6 @@ pub fn rayon_n_threads() -> i32 {
     current_num_threads() as i32
 }
 
-// TODO: Figure out how to return paired and unpaired
 #[wasm_bindgen]
 pub fn compute_pairings(
     boundaries: &[usize],
