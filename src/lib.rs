@@ -1,12 +1,13 @@
 mod utils;
 
+use lophat::{
+    algorithms::{LockFreeAlgorithm, RVDecomposition},
+    columns::VecColumn,
+    utils::{anti_transpose, PersistenceDiagram},
+};
 use wasm_bindgen::prelude::*;
 pub use wasm_bindgen_rayon::init_thread_pool;
 
-use lophat::{
-    anti_transpose, anti_transpose_diagram, rv_decompose, DiagramReadOff, LoPhatOptions,
-    PersistenceDiagram, VecColumn,
-};
 use rayon::{current_num_threads, prelude::*};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -76,8 +77,7 @@ pub fn compute_pairings(
         matrix.push(VecColumn::from((dimension, col.into())));
     }
     let at = anti_transpose(&matrix);
-    let options = LoPhatOptions::default();
-    let decomp = rv_decompose(at.into_iter(), &options);
-    let diagram = anti_transpose_diagram(decomp.diagram(), n_cols);
+    let decomp = LockFreeAlgorithm::decompose(at.into_iter(), None);
+    let diagram = decomp.diagram().anti_transpose(n_cols);
     diagram.into()
 }
