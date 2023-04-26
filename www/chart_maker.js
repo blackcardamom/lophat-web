@@ -25,6 +25,7 @@ function setupPersistenceDiagram(id) {
       ]
     },
     options: {
+      animations: false,
       scales: {
         y: { min: -0.1, max: 10 }, x: { min: -0.1, max: 10 }
       },
