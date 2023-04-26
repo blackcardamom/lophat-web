@@ -5,7 +5,10 @@ import init, {
   rayon_sum,
   rayon_n_threads,
   compute_pairings,
+  compute_alpha_persistence
 } from 'lophat-web';
+
+const EPSILON = 0.0001;
 
 function flattenBoundaries(boundaries) {
   return boundaries.reduce(
@@ -28,6 +31,23 @@ function formatPairings(flat_pairings) {
     pairings.push(flat_pairings.slice(i, i + chunkSize));
   }
   return pairings;
+}
+
+function formatFloatDiagram(float_diagram) {
+  // We only have dim 0 and 1
+  // We ignore unpaired (single infinite 0-dim feature)
+  let diagram = [[], []];
+  let dim_list = float_diagram.paired_dimensions;
+  let pairings = float_diagram.paired;
+  for (let i = 0; i < dim_list.length; i++) {
+    let dim = dim_list[i];
+    let b = pairings[2 * i];
+    let d = pairings[2 * i + 1];
+    if (d - b > EPSILON) {
+      diagram[dim].push([b, d])
+    }
+  }
+  return diagram
 }
 
 async function initFunctions() {
@@ -54,6 +74,10 @@ async function initFunctions() {
         unpaired: flat_pairings.unpaired,
       };
     },
+    computeAlphaPersistence(points) {
+      const float_diagram = compute_alpha_persistence(points.flat());
+      return formatFloatDiagram(float_diagram)
+    }
   });
 }
 

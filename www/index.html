@@ -13,16 +13,24 @@ p.problem {
 p.problem.noshow {
     display: none;
 }
+.canvas_container {
+  display: flex;
+  flex-direction: row;
+}
 </style>
   </head>
   <body>
+    <h1>LoPHAT Web Demo</h1>
+    <p>This is a quick, rough-and-ready tech demo, showing how <a href="https://github.com/tomchaplin/lophat">LoPHAT</a> can be used to perform parallelized persistent homology on the web.</p>
+    <p>Please wait until the number of threads is reported below:<p>
+    <p>Using <span id="n_threads">?</span> threads.</p>
+    <h2>Boundary matrix</h2>
     <form>
-        <p><label for="boundary_matrix"><b>Boundary matrix</b></label></p>
         <p>Each column should be provided on a new line in the form <code>dimension,boundary</code>
         where <code>boundary</code> is a comma-separated list of the non-zero indices of that column.
         <p>If the column has empty boundary (e.g. a vertex) then simply provide <code>dimension</code> as in the example below.</p>
         </p>
-<textarea name="boundary_matrix" id="boundary_matrix", rows="30", cols="150">
+<textarea name="boundary_matrix" id="boundary_matrix", rows="20", cols="100">
 0
 0
 0
@@ -37,8 +45,18 @@ p.problem.noshow {
     <p><b>Result:</b></p>
     <p id="problem" class="noshow problem">There was a problem, check the console for more details. You may need to refresh.</p>
     <p id="result"></p>
+  <h2>Alpha filtration</h2>
+  <p>
+  This computes the persistent homology of the alpha filtration of the points in the left chart (via <a href="https://github.com/tomchaplin/alphalpha">alphalpha</a>).
+  You can drag the points and observe how the persistence updates.
+  No vineyard-like algorithm is used.
+  <p>
+  <p><b>Warning:</b> This example update as you drag and may cause weaker devices such as mobiles to lag.</p>
+  <div class="canvas_container">
+  <canvas id="chartJSContainer" style="height: 500px; width: 500px;"></canvas>
+  <canvas id="pd-chartJSContainer" style="height: 500px; width: 500px;"></canvas>
+  </div>
     <p>Powered by Rust+WASM - see <a href="https://github.com/tomchaplin/lophat-web">the repository</a>.</p>
-    <p>Using <span id="n_threads"></span> threads.</p>
     <noscript>Your browser must support (threaded) webassembly and javascript to use this page.</noscript>
 	<script src="./bootstrap.js"></script>
   </body>

@@ -1,4 +1,5 @@
 import * as Comlink from 'comlink';
+import { setupPointEditor, setupPersistenceDiagram } from './chart_maker';
 
 async function getWorker() {
   return await Comlink.wrap(new Worker(new URL('./worker.js', import.meta.url)))
@@ -12,7 +13,7 @@ async function checkNumThreads(worker) {
   span.innerText = n_threads;
 }
 
-function setupForm(worker) {
+function initBoundaryMatrixExample(worker) {
   const textarea = document.getElementById('boundary_matrix');
   const button = document.getElementById('compute');
   button.onclick = async (e) => {
@@ -79,10 +80,45 @@ function hideError() {
   }
 }
 
+
+function initAlphaExample(worker) {
+
+  const N = 20;
+  const R = 5;
+  let points = [...Array(N).keys()].map(i => {
+    return [R * Math.cos(2 * Math.PI * i / N), R * Math.sin(2 * Math.PI * i / N)]
+  })
+
+  let pd_chart_handle = setupPersistenceDiagram('pd-chartJSContainer');
+
+  let refreshPersistenceDiagram = async function() {
+    let diagram = await worker.computeAlphaPersistence(points);
+    pd_chart_handle.data.datasets[0].data = diagram[0].map(pt => {
+      return {x: pt[0], y: pt[1]}
+    })
+    pd_chart_handle.data.datasets[1].data = diagram[1].map(pt => {
+      return {x: pt[0], y: pt[1]}
+    })
+    pd_chart_handle.update()
+  }
+
+  let dragCallback = (index, value) => {
+    points[index][0] = value.x;
+    points[index][1] = value.y;
+    refreshPersistenceDiagram();
+  }
+
+  let chart_handle = setupPointEditor('chartJSContainer', points, dragCallback)
+  refreshPersistenceDiagram();
+}
+
+
 async function init() {
   const worker = await getWorker();
   checkNumThreads(worker);
-  setupForm(worker);
+  initBoundaryMatrixExample(worker);
+  initAlphaExample(worker)
+
 }
 
 init();
