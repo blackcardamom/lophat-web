@@ -83,10 +83,11 @@ function hideError() {
 
 function initAlphaExample(worker) {
 
-  const N = 20;
+  const N = 50;
   const R = 5;
   let points = [...Array(N).keys()].map(i => {
-    return [R * Math.cos(2 * Math.PI * i / N), R * Math.sin(2 * Math.PI * i / N)]
+    const r = R + Math.random();
+    return [r * Math.cos(2 * Math.PI * i / N), r * Math.sin(2 * Math.PI * i / N)]
   })
 
   let pd_chart_handle = setupPersistenceDiagram('pd-chartJSContainer');

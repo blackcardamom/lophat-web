@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chart.js": "^3.6.0",
+    "chartjs-plugin-annotation": "^2.2.1",
     "chartjs-plugin-dragdata": "^2.2.5",
     "comlink": "^4.4.1",
     "lophat-web": "file:../pkg"
