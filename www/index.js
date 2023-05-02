@@ -69,7 +69,9 @@ function displayDiagram(diagram) {
 }
 
 function displayError(error) {
-  document.getElementById('problem').classList.remove('noshow');
+  let problemElem = document.getElementById('problem')
+  problemElem.innerHTML = `There was a problem:<br/>${error}`
+  problemElem.classList.remove('noshow');
   console.error(error);
 }
 
@@ -95,10 +97,10 @@ function initAlphaExample(worker) {
   let refreshPersistenceDiagram = async function() {
     let diagram = await worker.computeAlphaPersistence(points);
     pd_chart_handle.data.datasets[0].data = diagram[0].map(pt => {
-      return {x: pt[0], y: pt[1]}
+      return { x: pt[0], y: pt[1] }
     })
     pd_chart_handle.data.datasets[1].data = diagram[1].map(pt => {
-      return {x: pt[0], y: pt[1]}
+      return { x: pt[0], y: pt[1] }
     })
     pd_chart_handle.update()
   }
@@ -115,10 +117,14 @@ function initAlphaExample(worker) {
 
 
 async function init() {
-  const worker = await getWorker();
-  checkNumThreads(worker);
-  initBoundaryMatrixExample(worker);
-  initAlphaExample(worker)
+  try {
+    const worker = await getWorker();
+    checkNumThreads(worker);
+    initBoundaryMatrixExample(worker);
+    initAlphaExample(worker)
+  } catch (error) {
+    displayError(error);
+  }
 
 }
 
